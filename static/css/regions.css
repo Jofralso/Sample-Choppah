@@ -1,0 +1,63 @@
+/* Bar regions, handles, selection, chips */
+
+.bar-region {
+  position: absolute; top: 0; bottom: 0;
+  background: color-mix(in srgb, var(--region-color) 25%, transparent);
+  border-left: 2px solid var(--region-color);
+  border-right: 2px solid var(--region-color);
+  z-index: 3; pointer-events: auto; cursor: grab;
+}
+.bar-region:active { cursor: grabbing; }
+.bar-region.ready-region {
+  background: color-mix(in srgb, var(--region-color) 35%, transparent);
+}
+.bar-region .region-label {
+  position: absolute; top: 2px; left: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: .55rem; font-weight: 800;
+  color: var(--region-color); text-shadow: 0 1px 3px rgba(0,0,0,.8);
+  pointer-events: none;
+}
+
+.region-handle {
+  position: absolute; top: 0; bottom: 0; width: 10px;
+  cursor: ew-resize; z-index: 10; background: transparent;
+}
+.region-handle.left { left: -5px; }
+.region-handle.right { right: -5px; }
+.region-handle:hover { background: rgba(255,255,255,.12); }
+
+.bar-region.selecting {
+  background: color-mix(in srgb, var(--source-color, var(--yellow)) 15%, transparent);
+  border-color: var(--source-color, var(--yellow));
+  border-style: dashed;
+  z-index: 4;
+}
+
+.region-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+.region-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 8px 3px 5px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-left: 3px solid var(--chip-color, var(--yellow));
+  border-radius: var(--radius); font-size: .72rem; cursor: default; transition: all .1s;
+}
+.region-chip:hover { border-color: var(--chip-color); }
+.region-chip.ready {
+  background: var(--green-dim); border-color: var(--green);
+  border-left-color: var(--green);
+  box-shadow: 0 0 8px rgba(0,255,136,.1);
+}
+
+.chip-times { font-family: 'JetBrains Mono', monospace; color: var(--text2); font-size: .68rem; }
+.chip-dur { color: var(--text3); font-size: .6rem; }
+.chip-btn {
+  background: none; border: none; cursor: pointer; padding: 0 2px;
+  font-size: .78rem; line-height: 1; color: var(--text3); transition: color .08s;
+}
+.chip-btn:hover { color: var(--text); }
+.chip-btn.preview-btn:hover { color: var(--cyan); }
+.chip-btn.ready-btn:hover { color: var(--green); }
+.chip-btn.remove-btn:hover { color: var(--red); }
+.chip-ready-icon { color: var(--text3); }
+.region-chip.ready .chip-ready-icon { color: var(--green); }
