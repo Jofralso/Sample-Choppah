@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: sample-choppah-linux
+            sep: ':'
+          - os: macos-latest
+            artifact: sample-choppah-macos
+            sep: ':'
+          - os: windows-latest
+            artifact: sample-choppah-windows
+            sep: ';'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install -r requirements.txt pyinstaller
+
+      - name: Build standalone
+        run: >
+          pyinstaller --onefile --name ${{ matrix.artifact }}
+          --add-data "static${{ matrix.sep }}static"
+          --hidden-import server
+          --hidden-import server.config
+          --hidden-import server.app_factory
+          --hidden-import server.routes
+          --hidden-import server.routes.static
+          --hidden-import server.routes.resolve
+          --hidden-import server.routes.upload
+          --hidden-import server.routes.export
+          app.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true

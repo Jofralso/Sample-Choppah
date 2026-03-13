@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GET DA CHOPPAH</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ─── LOGO ─── -->
+    <header>
+<pre class="logo" aria-label="GET DA CHOPPAH">
+ ██████╗ ███████╗████████╗  ██████╗  █████╗
+██╔════╝ ██╔════╝╚══██╔══╝  ██╔══██╗██╔══██╗
+██║  ███╗█████╗     ██║     ██║  ██║███████║
+██║   ██║██╔══╝     ██║     ██║  ██║██╔══██║
+╚██████╔╝███████╗   ██║     ██████╔╝██║  ██║
+ ╚═════╝ ╚══════╝   ╚═╝     ╚═════╝ ╚═╝  ╚═╝
+ ██████╗██╗  ██╗ ██████╗ ██████╗ ██████╗  █████╗ ██╗  ██╗
+██╔════╝██║  ██║██╔═══██╗██╔══██╗██╔══██╗██╔══██╗██║  ██║
+██║     ███████║██║   ██║██████╔╝██████╔╝███████║███████║
+██║     ██╔══██║██║   ██║██╔═══╝ ██╔═══╝ ██╔══██║██╔══██║
+╚██████╗██║  ██║╚██████╔╝██║     ██║     ██║  ██║██║  ██║
+ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝</pre>
+      <div class="add-bar">
+        <input type="text" id="url-input" placeholder="DROP A YOUTUBE / SOUNDCLOUD LINK OR SEARCH..." autocomplete="off" spellcheck="false">
+        <button id="btn-go" class="btn accent">ADD</button>
+        <label class="btn ghost file-label">
+          📁 FILE
+          <input type="file" id="file-input" accept="audio/*" hidden>
+        </label>
+      </div>
+      <!-- search results dropdown -->
+      <div id="search-results" class="search-dropdown"></div>
+    </header>
+
+    <!-- ─── MAIN LAYOUT ─── -->
+    <div class="columns">
+
+      <!-- LEFT: Sources & stream bars -->
+      <section class="col-sources" id="sources-col">
+        <div class="col-label">SOURCES <span class="subtle" id="source-count"></span></div>
+        <div id="source-list" class="source-list">
+          <div class="empty-hint" id="empty-hint">
+            <span class="empty-icon">💿</span>
+            Drop a link above to start diggin'
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Export queue -->
+      <section class="col-queue" id="queue-col">
+        <div class="col-label">EXPORT ORDER <span class="subtle" id="region-count">0</span></div>
+
+        <!-- Timeline preview -->
+        <div class="timeline-strip" id="timeline-strip"></div>
+
+        <div id="queue-list" class="queue-list">
+          <div class="empty-hint" id="queue-empty">
+            <span class="empty-icon">🔪</span>
+            Chop regions &amp; they show here
+          </div>
+        </div>
+        <div class="export-controls" id="export-controls" style="display:none;">
+          <select id="export-format" title="Output format">
+            <option value="wav">WAV</option>
+            <option value="mp3">MP3</option>
+            <option value="flac">FLAC</option>
+          </select>
+          <button class="btn export-btn" id="btn-export">⬇ EXPORT</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- hidden players -->
+    <div id="hidden-players" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;"></div>
+
+    <!-- overlay -->
+    <div id="overlay" class="overlay" style="display:none;">
+      <div class="overlay-box">
+        <div class="spinner"></div>
+        <p id="overlay-msg">Downloading &amp; chopping...</p>
+      </div>
+    </div>
+
+    <!-- precision refinement overlay -->
+    <div id="precision-overlay" class="precision-overlay" style="display:none;">
+      <div class="precision-box">
+        <div class="precision-header">
+          <span class="precision-title">REFINE REGION</span>
+          <button id="prec-close" class="precision-close">&times;</button>
+        </div>
+        <div class="precision-source" id="prec-source-name"></div>
+        <div class="precision-bar" id="prec-bar">
+          <div class="precision-ctx left" id="prec-ctx-left"></div>
+          <div class="precision-region" id="prec-region"></div>
+          <div class="precision-ctx right" id="prec-ctx-right"></div>
+          <div class="precision-handle left" id="prec-handle-left"></div>
+          <div class="precision-handle right" id="prec-handle-right"></div>
+          <span class="precision-time-label left" id="prec-view-start"></span>
+          <span class="precision-time-label right" id="prec-view-end"></span>
+        </div>
+        <div class="precision-inputs">
+          <label class="prec-label">START<input type="number" id="prec-start" step="0.1" min="0"></label>
+          <label class="prec-label">END<input type="number" id="prec-end" step="0.1" min="0"></label>
+          <span class="precision-dur" id="prec-dur">0.0s</span>
+        </div>
+        <div class="precision-actions">
+          <button class="btn ghost" id="prec-preview">▶ PREVIEW</button>
+          <button class="btn ghost" id="prec-cancel">CANCEL</button>
+          <button class="btn accent" id="prec-apply">APPLY</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script type="module" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="Jofralso" data-color="#BD5FFF" data-emoji="💿" data-font="Inter" data-text="Buy me a Record" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+</body>
+</html>
