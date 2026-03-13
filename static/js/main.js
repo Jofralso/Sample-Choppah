@@ -40,12 +40,4 @@ function init() {
   setInterval(pollPlayheads, 150);
 }
 
-// Load SoundCloud Widget API
-(function() {
-  const s = document.createElement('script');
-  s.src = 'https://w.soundcloud.com/player/api.js';
-  s.async = true;
-  document.head.appendChild(s);
-})();
-
 init();

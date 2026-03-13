@@ -130,10 +130,9 @@ async function addUrl(url) {
     const d = await res.json();
     if (!res.ok) { alert(d.error || 'Failed'); return; }
 
-    const plat = (d.platform || '').toLowerCase().includes('soundcloud') ? 'SC' : 'YT';
     createSource({
       type: 'url', url: d.url, title: d.title,
-      duration: d.duration || 0, platform: plat,
+      duration: d.duration || 0, platform: 'YT',
     });
     $url.value = '';
     $searchDrop.classList.remove('open');

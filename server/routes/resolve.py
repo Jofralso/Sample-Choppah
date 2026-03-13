@@ -18,7 +18,7 @@ def resolve_url():
     if not url:
         return jsonify({"error": "No URL provided"}), 400
     if not is_allowed_url(url):
-        return jsonify({"error": "Only YouTube and SoundCloud URLs are supported"}), 400
+        return jsonify({"error": "Only YouTube URLs are supported"}), 400
 
     try:
         result = subprocess.run(
@@ -44,7 +44,7 @@ def resolve_url():
 
 @resolve_bp.route("/search", methods=["POST"])
 def search_sources():
-    """Search YouTube (default) or SoundCloud for tracks."""
+    """Search YouTube for tracks."""
     data = request.get_json()
     query = data.get("query", "").strip()
     platform = data.get("platform", "youtube").lower()
@@ -53,7 +53,7 @@ def search_sources():
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
-    search_prefix = "scsearch" if platform == "soundcloud" else "ytsearch"
+    search_prefix = "ytsearch"
 
     try:
         result = subprocess.run(

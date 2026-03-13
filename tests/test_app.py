@@ -54,15 +54,6 @@ class TestUrlAllowlist:
     def test_youtube_short(self):
         assert is_allowed_url("https://youtu.be/dQw4w9WgXcQ")
 
-    def test_soundcloud(self):
-        assert is_allowed_url("https://soundcloud.com/user/track-name")
-
-    def test_soundcloud_mobile(self):
-        assert is_allowed_url("https://m.soundcloud.com/user/track-name")
-
-    def test_soundcloud_short_link(self):
-        assert is_allowed_url("https://on.soundcloud.com/abc123")
-
     def test_random_url_rejected(self):
         assert not is_allowed_url("https://evil.example.com/malware")
 
@@ -106,7 +97,7 @@ class TestResolve:
     def test_disallowed_url(self, client):
         resp = client.post("/api/resolve", json={"url": "https://evil.com/video"})
         assert resp.status_code == 400
-        assert b"Only YouTube and SoundCloud" in resp.data
+        assert b"Only YouTube" in resp.data
 
     @patch("server.routes.resolve.subprocess.run")
     def test_valid_youtube_url(self, mock_run, client):

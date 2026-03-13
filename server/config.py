@@ -21,10 +21,6 @@ ALLOWED_URL_PATTERNS = [
     # YouTube
     r"^https?://(www\.)?youtube\.com/watch\?v=[\w-]+",
     r"^https?://youtu\.be/[\w-]+",
-    # SoundCloud
-    r"^https?://(www\.)?soundcloud\.com/[\w-]+/[\w-]+",
-    r"^https?://(m\.)?soundcloud\.com/[\w-]+/[\w-]+",
-    r"^https?://on\.soundcloud\.com/[\w-]+",
 ]
 
 

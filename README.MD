@@ -25,7 +25,7 @@
 > 
 > *"I need your breaks, your stabs, and your vocal chops."* — The Scratchinator 🤖
 
-You know the drill. You're diggin' through YouTube, SoundCloud, your crate of local files — hunting for that one break, that one vocal stab, that perfect scratch sentence. You find it. Now what? Fire up a DAW, cut it, export it, name it, repeat forty times?
+You know the drill. You're diggin' through YouTube, your crate of local files — hunting for that one break, that one vocal stab, that perfect scratch sentence. You find it. Now what? Fire up a DAW, cut it, export it, name it, repeat forty times?
 
 **Nah.** The Sample Choppah! does the dirty work. Drop a link, drag across the waveform bar, mark your chops, drag 'em into order, hit export. Done. Your scratch track is ready to burn to wax, load into Serato, or rock on the SP.
 
@@ -45,7 +45,7 @@ You know the drill. You're diggin' through YouTube, SoundCloud, your crate of lo
 > *"I teach scratch workshops for kids. They don't know Pro Tools. They don't NEED Pro Tools. I show them Sample Choppah!, they paste a link, they drag, they hear their own scratch track in 60 seconds. The look on their face when they hear their first sentence? That's why I do this."*
 > — **Q-Berta** *(no relation to a certain Swiss legend, we swear)*, turntablist & educator, Berlin
 
-> *"I dig through SoundCloud for hours finding obscure vocals for my routines. Before this? I'd have 47 Audacity windows open, manually cutting, exporting, renaming. Now I load the track, chop the 6 words I need, drag 'em into sentence order, export. One file. Done. My workflow went from 45 minutes to 5."*
+> *"I dig through YouTube for hours finding obscure vocals for my routines. Before this? I'd have 47 Audacity windows open, manually cutting, exporting, renaming. Now I load the track, chop the 6 words I need, drag 'em into sentence order, export. One file. Done. My workflow went from 45 minutes to 5."*
 > — **DA Shadow... Not That One** *(legally distinct, spiritually identical)*, sample digger, Toronto
 
 > *"I'm not a DJ. I'm a beatmaker. But when I need to grab a one-shot from a YouTube tutorial, or slice 4 drum hits from a break, I don't want to open my whole DAW. The Choppah is like a surgical knife — get in, cut, get out. No bloat."*
@@ -62,7 +62,7 @@ This ain't a DAW. This ain't a beat maker. This is a **sample choppah** — purp
 
 | Feature | The Deal |
 |---------|----------|
-| 🔗 **YouTube & SoundCloud** | Paste a link, the Choppah resolves it. No downloads needed upfront. |
+| 🔗 **YouTube** | Paste a link, the Choppah resolves it. No downloads needed upfront. |
 | 📁 **Local files** | Got your own crate? Upload WAV, MP3, FLAC, OGG, and more. |
 | 🔪 **Visual chopping** | Click & drag on the stream bar to select regions. See what you're cutting. |
 | 🔬 **Precision overlay** | Click a region to zoom in. Drag handles or type exact timestamps. Surgical. |
@@ -121,7 +121,7 @@ Open your browser. Drop a link. Start choppin'.
 
 ## 🎛️ How To Use It (The 30-Second Version)
 
-1. **Paste a YouTube/SoundCloud link** (or search by name, or upload a file)
+1. **Paste a YouTube link** (or search by name, or upload a file)
 2. **Drag across the stream bar** to chop a region
 3. **Click a region** to open the precision overlay and fine-tune
 4. **Hit ✓** to mark a region as ready

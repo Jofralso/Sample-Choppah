@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-01
 
 ### Added
-- YouTube and SoundCloud source support with metadata resolution
+- YouTube source support with metadata resolution
 - Drag-to-select region chopping on stream bars
 - Per-region color coding
 - Draggable and resizable regions with overlap prevention
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backward-compatible grouped source format
 - Undo / Redo (Ctrl+Z / Ctrl+Shift+Z / Ctrl+Y)
 - Local file upload with ffmpeg conversion
-- Search YouTube / SoundCloud from the input bar
+- Search YouTube from the input bar
 - Playback preview per source and per region
 - Timeline strip visualizing the final export
 
