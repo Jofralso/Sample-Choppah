@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAMPLE CHOPPAH!</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ─── LOGO ─── -->
+    <header>
+<pre class="logo" aria-label="SAMPLE CHOPPAH">
+ ▄████████    ▄████████       ▄▄▄▄███▄▄▄▄      ▄███████▄    ▄█         ▄████████
+███    ███   ███    ███     ▄██▀▀▀███▀▀▀██▄   ███    ███   ███         ███    ███
+███    █▀    ███    ███     ███   ███   ███   ███    ███   ███         ███    █▀
+███          ███    ███     ███   ███   ███   ███    ███   ███        ▄███▄▄▄
+▀███████████ ▀███████████   ███   ███   ███ ▀█████████▀    ███       ▀▀███▀▀▀
+         ███   ███    ███   ███   ███   ███   ███          ███         ███    █▄
+   ▄█    ███   ███    ███   ███   ███   ███   ███          ███▌    ▄   ███    ███
+ ▄████████▀    ███    █▀     ▀█   ███   █▀   ▄████▀        █████▄▄██   ██████████
+
+ ▄████████  ▄█    █▄   ▄██████▄     ▄███████▄    ▄███████▄     ▄████████  ▄█    █▄    ▄██▄
+███    ███ ███    ███ ███    ███   ███    ███   ███    ███   ███    ███  ███    ███   █  █
+███    █▀  ███    ███ ███    ███   ███    ███   ███    ███   ███    ███  ███    ███   █  █
+███        ███▄▄▄▄███ ███    ███   ███    ███   ███    ███   ███    ███  ███▄▄▄▄███   █  █
+███        ▀▀▀▀▀▀▀███ ███    ███ ▀█████████▀  ▀█████████▀  ▀███████████  ▀▀▀▀▀▀▀███   ████
+███    █▄  ███    ███ ███    ███   ███          ███          ███    ███  ███    ███    ██
+███    ███ ███    ███ ███    ███   ███          ███          ███    ███  ███    ███    ██
+████████▀  ███    █▀   ▀██████▀   ▄████▀      ▄████▀        ███     █▀   ███    █▀     ██
+                                                                                ████</pre>
+      <div class="add-bar">
+        <input type="text" id="url-input" placeholder="DROP A YOUTUBE / SOUNDCLOUD LINK OR SEARCH..." autocomplete="off" spellcheck="false">
+        <button id="btn-go" class="btn accent">ADD</button>
+        <label class="btn ghost file-label">
+          📁 FILE
+          <input type="file" id="file-input" accept="audio/*" hidden>
+        </label>
+      </div>
+      <!-- search results dropdown -->
+      <div id="search-results" class="search-dropdown"></div>
+    </header>
+
+    <!-- ─── MAIN LAYOUT ─── -->
+    <div class="columns">
+
+      <!-- LEFT: Sources & stream bars -->
+      <section class="col-sources" id="sources-col">
+        <div class="col-label">SOURCES <span class="subtle" id="source-count"></span></div>
+        <div id="source-list" class="source-list">
+          <div class="empty-hint" id="empty-hint">
+            <span class="empty-icon">💿</span>
+            Drop a link above to start diggin'
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Export queue -->
+      <section class="col-queue" id="queue-col">
+        <div class="col-label">EXPORT ORDER <span class="subtle" id="region-count">0</span></div>
+
+        <!-- Timeline preview -->
+        <div class="timeline-strip" id="timeline-strip"></div>
+
+        <div id="queue-list" class="queue-list">
+          <div class="empty-hint" id="queue-empty">
+            <span class="empty-icon">🔪</span>
+            Chop regions &amp; they show here
+          </div>
+        </div>
+        <div class="export-controls" id="export-controls" style="display:none;">
+          <select id="export-format" title="Output format">
+            <option value="wav">WAV</option>
+            <option value="mp3">MP3</option>
+            <option value="flac">FLAC</option>
+          </select>
+          <label class="gap-label" title="Silence between samples">
+            GAP
+            <input type="number" id="gap-duration" value="1" min="0" max="10" step="0.1">
+            <span class="gap-unit">s</span>
+          </label>
+          <button class="btn export-btn" id="btn-export">⬇ EXPORT</button>
+        </div>
+        <div class="export-preview" id="export-preview" style="display:none;">
+          <div class="preview-header">
+            <span class="preview-title">PREVIEW</span>
+            <button id="preview-close" class="preview-close-btn">&times;</button>
+          </div>
+          <audio id="preview-audio" controls></audio>
+          <div class="preview-actions">
+            <button class="btn accent" id="preview-download">⬇ DOWNLOAD</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- hidden players -->
+    <div id="hidden-players" style="position:absolute;left:-9999px;top:-9999px;width:320px;height:180px;overflow:hidden;pointer-events:none;"></div>
+
+    <!-- overlay -->
+    <div id="overlay" class="overlay" style="display:none;">
+      <div class="overlay-box">
+        <div class="spinner"></div>
+        <p id="overlay-msg">Downloading &amp; chopping...</p>
+      </div>
+    </div>
+
+    <!-- precision refinement overlay -->
+    <div id="precision-overlay" class="precision-overlay" style="display:none;">
+      <div class="precision-box">
+        <div class="precision-header">
+          <span class="precision-title">REFINE REGION</span>
+          <button id="prec-close" class="precision-close">&times;</button>
+        </div>
+        <div class="precision-source" id="prec-source-name"></div>
+        <div class="precision-bar" id="prec-bar">
+          <div class="precision-ctx left" id="prec-ctx-left"></div>
+          <div class="precision-region" id="prec-region"></div>
+          <div class="precision-ctx right" id="prec-ctx-right"></div>
+          <div class="precision-handle left" id="prec-handle-left"></div>
+          <div class="precision-handle right" id="prec-handle-right"></div>
+          <span class="precision-time-label left" id="prec-view-start"></span>
+          <span class="precision-time-label right" id="prec-view-end"></span>
+        </div>
+        <div class="precision-inputs">
+          <label class="prec-label">START<input type="number" id="prec-start" step="0.1" min="0"></label>
+          <label class="prec-label">END<input type="number" id="prec-end" step="0.1" min="0"></label>
+          <span class="precision-dur" id="prec-dur">0.0s</span>
+        </div>
+        <div class="precision-actions">
+          <button class="btn ghost" id="prec-preview">▶ PREVIEW</button>
+          <button class="btn ghost" id="prec-cancel">CANCEL</button>
+          <button class="btn accent" id="prec-apply">APPLY</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Built by <a href="https://github.com/Jofralso" target="_blank" rel="noopener">Jofralso</a></span>
+      <span class="footer-sep">|</span>
+      <a href="https://buymeacoffee.com/Jofralso" target="_blank" rel="noopener" class="bmc-link">💿 Buy me a Record</a>
+      <span class="footer-sep">|</span>
+      <a href="https://github.com/Jofralso/Sample-Choppah" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>
